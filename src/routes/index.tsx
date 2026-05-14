@@ -1,17 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { FadeInOnScroll } from "@/components/FadeInOnScroll";
 import { PerfumeBottleIcon } from "@/components/PerfumeBottleIcon";
+import { useState } from "react";
+
+function getAsset(name: string) {
+  const fileName = name.includes(".") ? name : `${name}.jpg`;
+  return `/assets/${fileName}`;
+}
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Kamrah Fragrances — Perfumes de Lujo" },
+      { title: "Esencia Dorada — Perfumes de Lujo" },
       {
         name: "description",
         content:
-          "Kamrah Fragrances: fragancias exclusivas para quienes aprecian lo extraordinario. El lujo que se siente, el aroma que permanece.",
+          "Esencia Dorada: fragancias exclusivas para quienes aprecian lo extraordinario. El lujo que se siente, el aroma que permanece.",
       },
-      { property: "og:title", content: "Kamrah Fragrances — Perfumes de Lujo" },
+      { property: "og:title", content: "Esencia Dorada — Perfumes de Lujo" },
       {
         property: "og:description",
         content: "Fragancias exclusivas para quienes aprecian lo extraordinario.",
@@ -34,30 +40,59 @@ const WHATSAPP_GENERAL =
 
 const perfumes = [
   {
+    img: "kamrah-clasico",
     name: "Kamrah Clásico",
     description: "La esencia de lo eterno. Un aroma que nació para perdurar.",
+    about:
+      "Huele dulce, cálido y especiado. Lo primero que se siente es canela, vainilla y un toque licoroso tipo coñac o postre elegante. Después salen notas ambaradas y cremosas que lo hacen muy envolvente.",
+    sensation: "Elegante, seductor, maduro y bastante llamativo.",
+    when: ["Noches", "Salidas", "Citas", "Clima frío o invierno", "Eventos donde quieras destacar"],
+    note: "No es ideal para calor fuerte o uso diario en universidad/gym porque puede sentirse pesado.",
     url: "https://wa.me/51996502329?text=Hola%20quiero%20informacion%20sobre%20Kamrah%20Cl%C3%A1sico",
   },
   {
-    name: "Kamrah Qawa",
-    description: "Fuerza y misterio en cada nota. Hecho para quienes dejan huella.",
-    url: "https://wa.me/51996502329?text=Hola%20quiero%20informacion%20sobre%20Kamrah%20Qawa",
+    img: "kamrah-qawa",
+    name: "Khamrah Qahwa",
+    description: "Tiene la base dulce del Khamrah clásico, pero con café tostado.",
+    about:
+      "Tiene la base dulce del Khamrah clásico, pero con café tostado y un toque más oscuro y masculino. Se siente menos empalagoso y más refinado. El café no es tipo Starbucks fuerte; es más elegante y cálido.",
+    sensation: "Más serio, sofisticado y masculino que el clásico.",
+    when: ["Noches", "Reuniones elegantes", "Citas", "Clima frío", "Salidas formales o semi-formales"],
+    note: "Suele gustarle más a personas que sienten el Khamrah clásico demasiado dulce.",
+    url: "https://wa.me/51996502329?text=Hola%20quiero%20informacion%20sobre%20Khamrah%20Qahwa",
   },
   {
+    img: "mandarin-sky",
     name: "Mandarin Sky",
-    description: "Frescura que evoca libertad. El cielo capturado en un frasco.",
+    description: "Dulce fresco con mandarina cítrica y caramelizado.",
+    about:
+      "Huele dulce fresco. Tiene mandarina cítrica al inicio, pero rápido sale un aroma caramelizado y ligeramente avainillado. Mucha gente lo compara con un perfume juvenil de fiesta. Tiene vibra moderna y coqueta.",
+    sensation: "Joven, energético y atractivo.",
+    when: ["Fiestas", "Salidas con amigos", "Discotecas", "Citas casuales", "Primavera o noches templadas"],
+    note: "No tanto para oficina o ambientes muy serios.",
     url: "https://wa.me/51996502329?text=Hola%20quiero%20informacion%20sobre%20Mandarin%20Sky",
   },
   {
-    name: "9AM Afnan",
-    description:
-      "El despertar perfecto. Energía y elegancia desde el primer rayo de sol.",
-    url: "https://wa.me/51996502329?text=Hola%20quiero%20informacion%20sobre%209AM%20Afnan",
+    img: "9am-afnan",
+    name: "9 AM",
+    description: "Muy fresco y limpio. Sensación de recién bañado.",
+    about:
+      "Muy fresco y limpio. Se sienten cítricos, un toque acuático y algo jabonoso elegante. Da sensación de recién bañado y energía.",
+    sensation: "Activo, limpio, relajado y versátil.",
+    when: ["Universidad", "Trabajo", "Día a día", "Verano", "Gym", "Salidas casuales"],
+    note: "Es de los más fáciles de usar porque casi nunca incomoda.",
+    url: "https://wa.me/51996502329?text=Hola%20quiero%20informacion%20sobre%209%20AM",
   },
   {
-    name: "9PM Afnan",
-    description: "La noche te pertenece. Seducción envuelta en seda y ámbar.",
-    url: "https://wa.me/51996502329?text=Hola%20quiero%20informacion%20sobre%209PM%20Afnan",
+    img: "9pm-afnan",
+    name: "9 PM",
+    description: "Dulce, avainillado y frutal. Joven y seductor.",
+    about:
+      "Dulce, avainillado y frutal. Tiene manzana, vainilla y un fondo cálido que recuerda a perfumes de fiesta muy populares. Se siente juvenil y bastante seductor.",
+    sensation: "Coqueto, llamativo y fiestero.",
+    when: ["Discotecas", "Fiestas", "Citas", "Noches", "Clima fresco"],
+    note: "Proyecta bastante. Con pocas atomizaciones ya se nota.",
+    url: "https://wa.me/51996502329?text=Hola%20quiero%20informacion%20sobre%209%20PM",
   },
 ];
 
@@ -82,7 +117,7 @@ function Navbar() {
           href="#top"
           className="font-display text-2xl tracking-[0.3em] text-[color:var(--gold)]"
         >
-          KAMRAH
+          ESENCIA DORADA
         </a>
         <a
           href={WHATSAPP_GENERAL}
@@ -101,12 +136,18 @@ function Hero() {
   return (
     <section
       id="top"
-      className="min-h-screen flex items-center justify-center px-6 pt-20"
+      className="min-h-screen flex items-center justify-center px-6 pt-20 relative overflow-hidden"
+      style={{
+        backgroundImage: `url('${getAsset("hero-bg")}')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
     >
-      <div className="max-w-3xl text-center">
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/60 pointer-events-none" />
+      <div className="max-w-3xl text-center relative z-10">
         <FadeInOnScroll>
           <p className="text-[color:var(--gold)] tracking-[0.5em] text-xs mb-8 uppercase">
-            Kamrah Fragrances
+            Esencia Dorada
           </p>
         </FadeInOnScroll>
         <FadeInOnScroll delay={150}>
@@ -143,7 +184,7 @@ function About() {
             Sobre nosotros
           </p>
           <p className="font-display text-2xl md:text-3xl text-foreground leading-relaxed italic">
-            En Kamrah, cada fragancia es una obra de arte. Seleccionamos las
+            En Esencia Dorada, cada fragancia es una obra de arte. Seleccionamos las
             esencias más finas para crear experiencias olfativas que perduran
             en la memoria.
           </p>
@@ -154,6 +195,8 @@ function About() {
 }
 
 function Coleccion() {
+  const [selectedPerfume, setSelectedPerfume] = useState<typeof perfumes[number] | null>(null);
+
   return (
     <section id="coleccion" className="py-24 px-6">
       <div className="max-w-7xl mx-auto">
@@ -171,9 +214,16 @@ function Coleccion() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {perfumes.map((p, i) => (
             <FadeInOnScroll key={p.name} delay={i * 100}>
-              <article className="glass-card rounded-lg overflow-hidden flex flex-col h-full">
-                <div className="perfume-placeholder aspect-[4/5] flex items-center justify-center">
-                  <PerfumeBottleIcon />
+              <article
+                onClick={() => setSelectedPerfume(p)}
+                className="glass-card rounded-lg overflow-hidden flex flex-col h-full cursor-pointer transition hover:-translate-y-1"
+              >
+                <div className="perfume-placeholder aspect-[4/5] overflow-hidden">
+                  <img
+                    src={getAsset(p.img)}
+                    alt={p.name}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div className="p-6 flex flex-col flex-1">
                   <h3 className="font-display text-2xl text-foreground mb-3">
@@ -182,20 +232,102 @@ function Coleccion() {
                   <p className="text-[color:var(--text-secondary)] italic leading-relaxed mb-6 flex-1">
                     {p.description}
                   </p>
-                  <a
-                    href={p.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    type="button"
                     className="btn-gold-solid w-full text-center py-3 rounded font-medium tracking-wider"
                   >
-                    Cotizar
-                  </a>
+                    Ver más
+                  </button>
                 </div>
               </article>
             </FadeInOnScroll>
           ))}
         </div>
       </div>
+
+      {selectedPerfume && (
+        <div
+          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 animate-in fade-in duration-300"
+          onClick={() => setSelectedPerfume(null)}
+        >
+          <div
+            className="bg-background rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-[rgba(201,168,76,0.3)] animate-in fade-in zoom-in-95 duration-300 scale-100"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="sticky top-0 bg-background flex items-center justify-between p-6 border-b border-[rgba(201,168,76,0.3)]">
+              <h2 className="font-display text-3xl text-foreground">
+                {selectedPerfume.name}
+              </h2>
+              <button
+                onClick={() => setSelectedPerfume(null)}
+                className="text-2xl text-[color:var(--gold)] hover:opacity-70 transition"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="p-8 space-y-6">
+              <div className="rounded-lg overflow-hidden h-64">
+                <img
+                  src={getAsset(selectedPerfume.img)}
+                  alt={selectedPerfume.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              <div>
+                <h3 className="font-display text-xl text-[color:var(--gold)] mb-2 uppercase tracking-[0.1em]">
+                  ¿A qué huele?
+                </h3>
+                <p className="text-[color:var(--text-secondary)] leading-relaxed">
+                  {selectedPerfume.about}
+                </p>
+              </div>
+
+              <div>
+                <h3 className="font-display text-xl text-[color:var(--gold)] mb-2 uppercase tracking-[0.1em]">
+                  Sensación que da
+                </h3>
+                <p className="text-[color:var(--text-secondary)] leading-relaxed">
+                  {selectedPerfume.sensation}
+                </p>
+              </div>
+
+              <div>
+                <h3 className="font-display text-xl text-[color:var(--gold)] mb-3 uppercase tracking-[0.1em]">
+                  ¿Cuándo usarlo?
+                </h3>
+                <ul className="space-y-2">
+                  {selectedPerfume.when.map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-[color:var(--text-secondary)]">
+                      <span className="text-[color:var(--gold)] mt-1">•</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="font-display text-xl text-[color:var(--gold)] mb-2 uppercase tracking-[0.1em]">
+                  Nota
+                </h3>
+                <p className="text-[color:var(--text-secondary)] leading-relaxed">
+                  {selectedPerfume.note}
+                </p>
+              </div>
+
+              <a
+                href={selectedPerfume.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-gold-solid inline-flex px-8 py-3 rounded font-medium tracking-wider w-full text-center justify-center"
+              >
+                Cotizar este perfume
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
@@ -228,10 +360,10 @@ function Footer() {
     <footer className="bg-background py-12 px-6 border-t border-[rgba(201,168,76,0.3)]">
       <div className="max-w-4xl mx-auto text-center">
         <h3 className="font-display text-2xl tracking-[0.3em] text-[color:var(--gold)] mb-3">
-          KAMRAH FRAGRANCES
+          ESENCIA DORADA
         </h3>
         <p className="text-[color:var(--text-secondary)] italic mb-6">
-          El lujo que se siente, el aroma que permanece.
+          El lujo que se siente, el aroma que nopermanece.
         </p>
         <a
           href={WHATSAPP_GENERAL}
@@ -243,7 +375,7 @@ function Footer() {
           <WhatsAppIcon />
         </a>
         <p className="mt-8 text-xs text-[color:var(--text-secondary)] tracking-wider">
-          © {new Date().getFullYear()} Kamrah Fragrances. Todos los derechos reservados.
+          © {new Date().getFullYear()} Esencia Dorada. Todos los derechos reservados.
         </p>
       </div>
     </footer>
