@@ -1,7 +1,7 @@
 import server from "../dist/server/index.js";
 
 export const config = {
-  runtime: "nodejs18.x",
+  runtime: "nodejs",
 };
 
 function createRequest(req: any) {
