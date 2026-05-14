@@ -1,0 +1,30 @@
+{
+  "version": 3,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist/client"
+      }
+    },
+    {
+      "src": "api/ssr.ts",
+      "use": "@vercel/edge"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*\\.(js|css|map|png|jpg|jpeg|gif|svg|webp|ico|json|txt|woff|woff2|ttf|eot))$",
+      "dest": "/dist/client/$1"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/dist/client/assets/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/ssr"
+    }
+  ]
+}
