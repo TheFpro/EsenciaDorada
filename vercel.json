@@ -1,5 +1,15 @@
 {
   "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "framework": null
+  "outputDirectory": "dist/client",
+  "framework": null,
+  "routes": [
+    {
+      "src": "/(.*\\.(js|css|map|png|jpg|jpeg|gif|svg|webp|ico|json|txt|woff|woff2|ttf|eot))$",
+      "dest": "/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/ssr"
+    }
+  ]
 }
