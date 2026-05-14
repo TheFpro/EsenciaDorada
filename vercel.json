@@ -10,7 +10,7 @@
     },
     {
       "src": "api/ssr.ts",
-      "use": "@vercel/edge"
+      "use": "@vercel/node"
     }
   ],
   "routes": [
